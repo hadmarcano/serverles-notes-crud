@@ -8,6 +8,9 @@ provider:
   region: us-east-1
 
 functions:
+  authorizer:
+    handler: authorizer.handler
+
   createNote:
     handler: handler.createNote
     environment:
@@ -22,6 +25,7 @@ functions:
       - http:
           path: /notes/create
           method: post
+          authorizer: authorizer
   updateNote:
     handler: handler.updateNote
     environment:
@@ -36,6 +40,7 @@ functions:
       - http:
           path: /notes/{id}
           method: put
+          authorizer: authorizer
   deleteNote:
     handler: handler.deleteNote
     environment:
@@ -50,6 +55,7 @@ functions:
       - http:
           path: /notes/{id}
           method: delete
+          authorizer: authorizer
   getNotes:
     handler: handler.getNotes
     environment:
@@ -64,6 +70,7 @@ functions:
       - http:
           path: /notes
           method: get
+          authorizer: authorizer
 
 plugins:
   - serverless-iam-roles-per-function
