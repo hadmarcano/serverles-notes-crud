@@ -1,0 +1,31 @@
+# Notes DynamoDB Table
+notesTable:
+  Type: AWS::DynamoDB::Table
+  Properties:
+    TableName: notes
+    BillingMode: PAY_PER_REQUEST
+    AttributeDefinitions:
+      - AttributeName: notesId
+        AttributeType: S
+    KeySchema:
+      - AttributeName: notesId
+        KeyType: HASH
+# Cognito User Pool
+# cognitoUserPool:
+#   Type: AWS::Cognito::UserPool
+#   Properties:
+#     UserPoolName: MyNotesUP
+
+# User Pool web client
+# cognitoUserPoolWC:
+#   Type: AWS::Cognito::UserPoolClient
+#   Properties:
+#     ClientName: web
+#     UserPoolId: !Ref cognitoUserPool
+
+# User Pool Domain
+# cognitoUserPoolDomain:
+#   Type: AWS::Cognito::UserPoolDomain
+#   Properties:
+#     Domain: mynotescd
+#     UserPoolId: !Ref cognitoUserPool
