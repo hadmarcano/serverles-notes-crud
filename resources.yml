@@ -10,22 +10,23 @@ notesTable:
     KeySchema:
       - AttributeName: notesId
         KeyType: HASH
+
 # Cognito User Pool
-# cognitoUserPool:
-#   Type: AWS::Cognito::UserPool
-#   Properties:
-#     UserPoolName: MyNotesUP
+cognitoUserPool:
+  Type: AWS::Cognito::UserPool
+  Properties:
+    UserPoolName: MyNotesUP
 
 # User Pool web client
-# cognitoUserPoolWC:
-#   Type: AWS::Cognito::UserPoolClient
-#   Properties:
-#     ClientName: web
-#     UserPoolId: !Ref cognitoUserPool
+cognitoUserPoolWC:
+  Type: AWS::Cognito::UserPoolClient
+  Properties:
+    ClientName: web
+    UserPoolId: !Ref cognitoUserPool
 
 # User Pool Domain
-# cognitoUserPoolDomain:
-#   Type: AWS::Cognito::UserPoolDomain
-#   Properties:
-#     Domain: mynotescd
-#     UserPoolId: !Ref cognitoUserPool
+cognitoUserPoolDomain:
+  Type: AWS::Cognito::UserPoolDomain
+  Properties:
+    Domain: mynotesupd
+    UserPoolId: !Ref cognitoUserPool
