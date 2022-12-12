@@ -1,10 +1,13 @@
 const { CognitoJwtVerifier } = require("aws-jwt-verify");
 
+const COGNITO_USERPOOL_ID = process.env.COGNITO_USERPOOL_ID;
+const COGNITO_WEB_CLIENT_ID = process.env.COGNITO_WEB_CLIENT_ID;
+
 // Verifier that expects valid access tokens:
 const verifier = CognitoJwtVerifier.create({
-  userPoolId: "us-east-1_M5JX6Jr7S",
+  userPoolId: COGNITO_USERPOOL_ID,
   tokenUse: "id", // "access" or "id"
-  clientId: "3flg1d1o7ppo10qfkhsuu0c41f",
+  clientId: COGNITO_WEB_CLIENT_ID,
 });
 
 const generatePolicy = (principalId, effect, resource) => {
@@ -44,21 +47,16 @@ exports.handler = async (event, context, callback) => {
     const payload = await verifier.verify(
       token // the JWT as string
     );
+    console.log("TOKEN", token);
+    console.log("ok COGNITO_USERPOOL_ID", COGNITO_USERPOOL_ID);
+    console.log("ok COGNITO_WEB_CLIENT_ID", COGNITO_WEB_CLIENT_ID);
     console.log("Token is valid. Payload:", JSON.stringify(payload));
     callback(null, generatePolicy("user", "Allow", event.methodArn));
   } catch (error) {
+    console.log("TOKEN", token);
+    console.log("COGNITO_USERPOOL_ID", COGNITO_USERPOOL_ID);
+    console.log("COGNITO_WEB_CLIENT_ID", COGNITO_WEB_CLIENT_ID);
     console.log("Token not valid!");
     callback("Error: Invalid Token", JSON.stringify(error));
   }
-
-  //   switch (token) {
-  //     case "allow":
-  //       callback(null, generatePolicy("user", "Allow", event.methodArn));
-  //       break;
-  //     case "deny":
-  //       callback(null, generatePolicy("user", "Deny", event.methodArn));
-  //       break;
-  //     default:
-  //       callback("Error: Invalid Token");
-  //   }
 };

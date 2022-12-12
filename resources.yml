@@ -22,6 +22,18 @@ cognitoUserPoolWC:
   Type: AWS::Cognito::UserPoolClient
   Properties:
     ClientName: web
+    AllowedOAuthFlows:
+      - implicit
+    AllowedOAuthFlowsUserPoolClient: true
+    SupportedIdentityProviders:
+      - COGNITO
+    AllowedOAuthScopes:
+      - phone
+      - email
+      - openid
+      - profile
+    CallbackURLs:
+      - http://localhost:3000
     UserPoolId: !Ref cognitoUserPool
 
 # User Pool Domain
@@ -30,3 +42,13 @@ cognitoUserPoolDomain:
   Properties:
     Domain: mynotesupd
     UserPoolId: !Ref cognitoUserPool
+
+# Application Parameters SSM
+userPoolIdParam:
+  Type: AWS::SSM::Parameter
+  Properties:
+    Name: /notes/dev/userPoolId
+    Type: String
+    Value: !GetAtt cognitoUserPool.Arn
+# For use this parameter in the yml
+# => ${ssm:/notes/dev/userPoolId}
