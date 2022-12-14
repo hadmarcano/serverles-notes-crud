@@ -44,11 +44,11 @@ cognitoUserPoolDomain:
     Domain: mynotesupd-${self:provider.stage}
 
 # Application Parameters SSM
+# For use this parameter in the yml
+# => ${ssm:/notes/dev/userPoolId}
 userPoolIdParam:
   Type: AWS::SSM::Parameter
   Properties:
     Name: /notes/${self:provider.stage}/userPoolId
     Type: String
     Value: !GetAtt cognitoUserPool.Arn
-# For use this parameter in the yml
-# => ${ssm:/notes/dev/userPoolId}
