@@ -18,7 +18,7 @@ const send = (statusCode, data) => {
 
 module.exports.createNote = async (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
-  console.log(event);
+  // console.log(event);
   let data = JSON.parse(event.body);
   try {
     const params = {
